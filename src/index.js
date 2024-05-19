@@ -4,14 +4,22 @@ const typeDefs = require('./schema/typeDefs')
 const resolvers = require('./resolvers')
 require('dotenv').config()
 
-const app = express()
+async function startServer() {
+  const app = express()
 
-const server = new ApolloServer({ typeDefs, resolvers })
+  const server = new ApolloServer({ typeDefs, resolvers })
 
-server.applyMiddleware({ app })
+  await server.start()
 
-const PORT = process.env.PORT || 4000
+  server.applyMiddleware({ app })
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`)
+  const PORT = process.env.PORT || 4000
+
+  app.listen(PORT, () => {
+    console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`)
+  })
+}
+
+startServer().catch(error => {
+  console.error('Server failed to start', error)
 })
