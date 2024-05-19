@@ -1,46 +1,23 @@
-const { gql, GraphQLObjectType, GraphQLString, GraphQLID } = require('graphql')
+const { gql } = require('apollo-server-express')
 
-const FlightType = new GraphQLObjectType({
-  name: 'Flight',
-  fields: () => ({
-    id: { type: GraphQLID },
-    origin: { type: GraphQLString },
-    destination: { type: GraphQLString },
-    departureDate: { type: GraphQLString },
-    returnDate: { type: GraphQLString },
-    price: { type: GraphQLString }
-  })
-})
-
-const QueryType = new GraphQLObjectType({
-  name: 'Query',
-  fields: {
-    searchFlights: {
-      type: new GraphQLList(FlightType),
-      args: {
-        origin: { type: GraphQLString },
-        destination: { type: GraphQLString },
-        departureDate: { type: GraphQLString },
-        returnDate: { type: GraphQLString }
-      },
-      resolve: async (_, { origin, destination, departureDate, returnDate }) => {
-        return [
-          {
-            id: '1',
-            origin,
-            destination,
-            departureDate,
-            returnDate,
-            price: '$500'
-          }
-        ]
-      }
-    }
+const typeDefs = gql`
+  type Flight {
+    id: ID!
+    origin: String!
+    destination: String!
+    departureDate: String!
+    returnDate: String
+    price: String!
   }
-})
 
-module.exports = {
-  typeDefs: gql`
-    ${QueryType}
-  `
-}
+  type Query {
+    searchFlights(
+      origin: String!
+      destination: String!
+      departureDate: String!
+      returnDate: String
+    ): [Flight]
+  }
+`
+
+module.exports = typeDefs
