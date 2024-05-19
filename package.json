@@ -4,9 +4,16 @@
   "description": "��F\u0000l\u0000i\u0000g\u0000h\u0000t\u0000 \u0000I\u0000n\u0000f\u0000o\u0000",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "amadeus": "^10.0.0",
+    "apollo-server-express": "^3.13.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "graphql": "^16.8.1"
+  }
 }
